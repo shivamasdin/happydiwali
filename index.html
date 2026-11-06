@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Diwali | Asdintech Festive Edition</title>
+    
+    <!-- External Fonts for Editorial Aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. GLOBAL VARIABLES & RESET
+           ========================================================================== */
+        :root {
+            --bg-deep: #050205;
+            --bg-maroon: #3B0F2E;
+            --bg-maroon-light: #52183F;
+            --gold: #D4AF37;
+            --gold-bright: #FFD700;
+            --gold-pale: #F5E6A3;
+            --crimson: #C8102E;
+            --crimson-glow: rgba(200, 16, 46, 0.6);
+            --cream: #FFF8E7;
+            --text-main: #EAEAEA;
+            --text-muted: #A89F9A;
+            --font-editorial: 'Playfair Display', serif;
+            --font-display: 'Cinzel', serif;
+            --font-sans: 'Inter', sans-serif;
+            --transition-smooth: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-deep);
+            font-family: var(--font-sans);
+            color: var(--text-main);
+        }
+
+        /* ==========================================================================
+           2. STATE 1: THE INITIAL LANDING PAGE (CLICK TO CELEBRATE)
+           ========================================================================== */
+        #landing-stage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, var(--bg-maroon) 0%, var(--bg-deep) 100%);
+            z-index: 100;
+            transition: var(--transition-smooth);
+        }
+
+        #landing-stage.exit-down {
+            transform: translateY(100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .landing-title {
+            font-family: var(--font-editorial);
+            font-size: 4rem;
+            color: var(--gold-pale);
+            font-style: italic;
+            margin-bottom: 50px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            text-align: center;
+            animation: fadeInDown 1.5s ease forwards;
+        }
+
+        .landing-btn {
+            padding: 20px 50px;
+            font-size: 20px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            color: var(--bg-deep);
+            background: linear-gradient(135deg, var(--gold-pale), var(--gold));
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4), inset 0 -3px 0 rgba(0,0,0,0.2);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            animation: pulseButton 2s infinite alternate;
+        }
+
+        .landing-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.4);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .landing-btn:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.8), inset 0 -3px 0 rgba(0,0,0,0.2);
+        }
+
+        .landing-btn:hover::after {
+            opacity: 1;
+            left: 100%;
+        }
+
+        /* ==========================================================================
+           3. STATE 2: THE IMMERSIVE DIWALI EXPERIENCE
+           ========================================================================== */
+        #diwali-stage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, var(--bg-maroon-light) 0%, var(--bg-deep) 100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 2s ease, visibility 2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        #diwali-stage.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- Ambient Background GIFs --- */
+        .ambient-gif {
+            position: absolute;
+            opacity: 0.15;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            filter: sepia(1) hue-rotate(-30deg) saturate(2) contrast(1.2);
+        }
+
+        .gif-1 {
+            bottom: -10%;
+            left: -10%;
+            width: 60%;
+            max-width: 800px;
+            animation: slowFloat 15s ease-in-out infinite alternate;
+        }
+
+        .gif-2 {
+            top: 5%;
+            right: -5%;
+            width: 40%;
+            max-width: 600px;
+            animation: slowFloat 20s ease-in-out infinite alternate-reverse;
+            transform: rotate(180deg);
+        }
+
+        /* --- Ambient Canvas Layer --- */
+        #ambient-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* --- Interactive Canvas Layer --- */
+        #cracker-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* --- Hero Content Typography --- */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            max-width: 900px;
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+            padding: 10px 24px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 30px;
+            background: rgba(212, 175, 55, 0.05);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInDown 1s ease 0.5s forwards;
+        }
+
+        .hero-title {
+            font-family: var(--font-editorial);
+            font-size: 8rem;
+            line-height: 1;
+            font-weight: 700;
+            font-style: italic;
+            color: var(--gold-pale);
+            text-shadow: 
+                0 0 20px rgba(212, 175, 55, 0.3),
+                0 0 60px rgba(200, 16, 46, 0.4);
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: scaleUpFade 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+        }
+
+        .hero-title span {
+            display: block;
+            font-size: 4rem;
+            font-family: var(--font-display);
+            font-style: normal;
+            letter-spacing: 15px;
+            color: var(--gold);
+            margin-top: 10px;
+            text-shadow: 0 0 30px var(--gold);
+        }
+
+        .hero-divider {
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto 30px;
+            opacity: 0;
+            animation: expandWidth 1.5s ease 1.5s forwards;
+        }
+
+        .hero-quote {
+            font-family: var(--font-editorial);
+            font-size: 1.6rem;
+            line-height: 1.6;
+            color: #dacab7;
+            max-width: 700px;
+            margin: 0 auto;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.2s ease 1.8s forwards;
+        }
+
+        /* --- Interactive Instruction Tooltip --- */
+        .instruction-toast {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 4, 8, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold-pale);
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 15px;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            z-index: 20;
+            pointer-events: none;
+            animation: pulseGlow 2s infinite alternate;
+            opacity: 0;
+            animation-delay: 3s;
+            animation-fill-mode: forwards;
+        }
+
+        /* ==========================================================================
+           4. ANIMATION KEYFRAMES
+           ========================================================================== */
+        @keyframes fadeInDown {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleUpFade {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes expandWidth {
+            to { opacity: 1; width: 200px; }
+        }
+
+        @keyframes slowFloat {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-30px) scale(1.05); }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.1); opacity: 0.6; }
+            100% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); opacity: 1; }
+        }
+
+        @keyframes pulseButton {
+            0% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), inset 0 -3px 0 rgba(0,0,0,0.2); }
+            100% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.8), inset 0 -3px 0 rgba(0,0,0,0.2); }
+        }
+
+        /* ==========================================================================
+           5. RESPONSIVE DESIGN
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 6rem; }
+            .hero-title span { font-size: 3rem; }
+            .hero-quote { font-size: 1.4rem; }
+        }
+
+        @media (max-width: 768px) {
+            .landing-title { font-size: 2.5rem; padding: 0 20px; }
+            .landing-btn { padding: 16px 40px; font-size: 18px; }
+            .hero-title { font-size: 4rem; }
+            .hero-title span { font-size: 2rem; letter-spacing: 10px; }
+            .hero-quote { font-size: 1.2rem; padding: 0 20px; }
+            .hero-badge { font-size: 10px; letter-spacing: 3px; }
+            .gif-1, .gif-2 { opacity: 0.08; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 3rem; }
+            .hero-title span { font-size: 1.5rem; letter-spacing: 5px; }
+            .hero-quote { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ======================================================================
+         STAGE 1: INITIAL LANDING PAGE
+         ====================================================================== -->
+    <div id="landing-stage">
+        <h1 class="landing-title">A Gift For You ✨</h1>
+        <button class="landing-btn" onclick="initiateTransition()">
+            🪔 Click Here to Celebrate 🪔
+        </button>
+    </div>
+
+    <!-- ======================================================================
+         STAGE 2: IMMERSIVE INTERACTIVE DIWALI EXPERIENCE
+         ====================================================================== -->
+    <div id="diwali-stage">
+        <!-- External Aesthetic GIFs -->
+        <img src="https://media.giphy.com/media/l41Yh1B2J1vD5B9BS/giphy.gif" class="ambient-gif gif-1" alt="Ambient Diya">
+        <img src="https://media.giphy.com/media/xT0xeuOy2Fcl9vDGiA/giphy.gif" class="ambient-gif gif-2" alt="Ambient Lights">
+
+        <!-- Canvas for ambient floating particles -->
+        <canvas id="ambient-canvas"></canvas>
+
+        <!-- Canvas for interactive firecrackers -->
+        <canvas id="cracker-canvas"></canvas>
+
+        <!-- Main Typography -->
+        <div class="hero-content">
+            <div class="hero-badge">The Asdintech Festive Edition</div>
+            <h1 class="hero-title">
+                Happy
+                <span>DIWALI</span>
+            </h1>
+            <div class="hero-divider"></div>
+            <p class="hero-quote">
+                "May the light of the diyas guide you towards the path of success and happiness. Wishing you a bright and prosperous year ahead."
+            </p>
+        </div>
+
+        <!-- Instruction Toast -->
+        <div class="instruction-toast" id="toast">
+            🖱️ Click anywhere to burst firecrackers!
+        </div>
+    </div>
+
+    <!-- ======================================================================
+         JAVASCRIPT LOGIC: ANIMATIONS, PHYSICS & SYNTHESIZED AUDIO
+         ====================================================================== -->
+    <script>
+        /* ==========================================================================
+           1. GLOBAL VARIABLES & INITIALIZATION
+           ========================================================================== */
+        const landingStage = document.getElementById('landing-stage');
+        const diwaliStage = document.getElementById('diwali-stage');
+        const ambientCanvas = document.getElementById('ambient-canvas');
+        const crackerCanvas = document.getElementById('cracker-canvas');
+        const toast = document.getElementById('toast');
+        
+        let ambientCtx, crackerCtx;
+        let width, height;
+        let isTransitioned = false;
+
+        // Audio Context (Initialized on user interaction to bypass browser autoplay policies)
+        let audioCtx = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            resizeCanvases();
+            window.addEventListener('resize', resizeCanvases);
+        });
+
+        function resizeCanvases() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            
+            ambientCanvas.width = width;
+            ambientCanvas.height = height;
+            crackerCanvas.width = width;
+            crackerCanvas.height = height;
+
+            ambientCtx = ambientCanvas.getContext('2d');
+            crackerCtx = crackerCanvas.getContext('2d');
+        }
+
+        function initiateTransition() {
+            if (isTransitioned) return;
+            isTransitioned = true;
+
+            // Initialize Audio Context safely
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+
+            // Play magical transition sound
+            playTransitionSound();
+
+            // Animate landing page out
+            landingStage.classList.add('exit-down');
+
+            // Animate Diwali experience in
+            setTimeout(() => {
+                diwaliStage.classList.add('active');
+                
+                // Start particle engines
+                initAmbientParticles();
+                initFirecrackerEngine();
+
+                // Remove toast after a while
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                }, 6000);
+
+            }, 800); 
+        }
+
+        /* ==========================================================================
+           2. THE AUDIO SYNTHESIZER ENGINE (12 Unique Diwali Sounds)
+           ========================================================================== */
+        
+        // Sound 1: Magical Chime (Transition)
+        function playTransitionSound() {
+            try {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 2);
+
+                gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 2);
+
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 2);
+            } catch (e) { console.log("Audio err", e); }
+        }
+
+        // Sound 2: Standard Pop (Sparkler)
+        function playPopSound() {
+            try {
+                const bufferSize = audioCtx.sampleRate * 0.3;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+                const noiseNode = audioCtx.createBufferSource();
+                noiseNode.buffer = buffer;
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'highpass';
+                filter.frequency.value = 1500;
+
+                const gainNode = audioCtx.createGain();
+                gainNode.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+
+                noiseNode.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                noiseNode.start();
+            } catch(e) {}
+        }
+
+        // Sound 3: Deep Heavy Bomb (Boom)
+        function playBoomSound() {
+            try {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+
+                gainNode.gain.setValueAtTime(0.8, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.5);
+            } catch(e) {}
+        }
+
+        // Sound 4: Whistling Rocket
+        function playWhistleSound() {
+            try {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(2000, audioCtx.currentTime + 0.6);
+
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.5);
+                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.6);
+
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.6);
+            } catch(e) {}
+        }
+
+        // Sound 5: Crackling Chakri (Fizz)
+        function playCrackleSound() {
+            try {
+                const bufferSize = audioCtx.sampleRate * 1.0;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                
+                for (let i = 0; i < bufferSize; i++) {
+                    if (Math.random() > 0.95) {
+                        data[i] = (Math.random() * 2 - 1) * Math.random();
+                    } else {
+                        data[i] = 0;
+                    }
+                }
+
+                const noiseNode = audioCtx.createBufferSource();
+                noiseNode.buffer = buffer;
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.value = 2500;
+
+                const gainNode = audioCtx.createGain();
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.0);
+
+                noiseNode.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                noiseNode.start();
+            } catch(e) {}
+        }
+
+        // Sound 6: Multi-Stage Crackers (Rat-a-tat-tat)
+        function playMultiCrackleSound() {
+            try {
+                let startTime = audioCtx.currentTime;
+                for(let i=0; i<8; i++) {
+                    let time = startTime + (i * 0.08);
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(300 + Math.random()*200, time);
+                    gain.gain.setValueAtTime(0.2, time);
+                    gain.gain.exponentialRampToValueAtTime(0.01, time + 0.05);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(time);
+                    osc.stop(time + 0.05);
+                }
+            } catch(e) {}
+        }
+
+        // Sound 7: Sizzling Sparkler
+        function playSizzleSound() {
+            try {
+                const bufferSize = audioCtx.sampleRate * 1.5;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() > 0.5 ? Math.random() * 2 - 1 : 0;
+                }
+
+                const noiseNode = audioCtx.createBufferSource();
+                noiseNode.buffer = buffer;
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'highpass';
+                filter.frequency.value = 5000;
+
+                const gainNode = audioCtx.createGain();
+                gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + 0.2);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.5);
+
+                noiseNode.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                noiseNode.start();
+            } catch(e) {}
+        }
+
+        // Sound 8: Flower Pot (Heavy Fizz + Pop)
+        function playFlowerPotSound() {
+            playPopSound();
+            setTimeout(() => playSizzleSound(), 100);
+        }
+
+        // Sound 9: Ground Spinner (Chakri Spin)
+        function playChakriSound() {
+            try {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(300, audioCtx.currentTime + 1);
+                
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 500;
+
+                gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.0);
+
+                osc.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 1.0);
+            } catch(e) {}
+        }
+
+        // Sound 10: Digital Firework Launch
+        function playLaunchSound() {
+            try {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.4);
+
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
+            } catch(e) {}
+        }
+
+        // Sound 11: Echoing Pop
+        function playEchoPopSound() {
+            try {
+                const osc = audioCtx.createOscillator();
+                const delay = audioCtx.createDelay();
+                const gainNode = audioCtx.createGain();
+                
+                delay.delayTime.value = 0.15;
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
+
+                gainNode.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+
+                osc.connect(gainNode);
+                gainNode.connect(delay);
+                delay.connect(audioCtx.destination);
+                gainNode.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } catch(e) {}
+        }
+
+        // Sound 12: Finale Cluster
+        function playFinaleSound() {
+            playBoomSound();
+            setTimeout(() => playMultiCrackleSound(), 150);
+            setTimeout(() => playSizzleSound(), 300);
+        }
+
+        /* ==========================================================================
+           3. AMBIENT PARTICLES ENGINE (Background Fireflies / Floating Dust)
+           ========================================================================== */
+        let ambientParticles = [];
+        const AMBIENT_PARTICLE_COUNT = 100;
+
+        class AmbientParticle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8 - 0.3; // Slight upward drift
+                this.opacity = Math.random() * 0.6 + 0.2;
+                this.pulseSpeed = Math.random() * 0.03 + 0.01;
+                this.pulseDir = Math.random() > 0.5 ? 1 : -1;
+                // Colors: Gold, Cream, Soft Pink
+                const colorChoices = ['212, 175, 55', '255, 248, 231', '255, 182, 193'];
+                this.color = colorChoices[Math.floor(Math.random() * colorChoices.length)];
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Wrap around edges
+                if (this.x < 0) this.x = width;
+                if (this.x > width) this.x = 0;
+                if (this.y < 0) this.y = height;
+                if (this.y > height) this.y = 0;
+
+                // Pulse opacity
+                this.opacity += this.pulseSpeed * this.pulseDir;
+                if (this.opacity > 0.9 || this.opacity < 0.1) {
+                    this.pulseDir *= -1;
+                }
+            }
+
+            draw(ctx) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = `rgba(${this.color}, 1)`;
+                ctx.fill();
+                ctx.shadowBlur = 0; // Reset
+            }
+        }
+
+        function initAmbientParticles() {
+            ambientParticles = [];
+            for (let i = 0; i < AMBIENT_PARTICLE_COUNT; i++) {
+                ambientParticles.push(new AmbientParticle());
+            }
+            animateAmbient();
+        }
+
+        function animateAmbient() {
+            ambientCtx.clearRect(0, 0, width, height);
+            
+            ambientParticles.forEach(p => {
+                p.update();
+                p.draw(ambientCtx);
+            });
+
+            requestAnimationFrame(animateAmbient);
+        }
+
+        /* ==========================================================================
+           4. INTERACTIVE FIRECRACKER ENGINE (Canvas Physics)
+           ========================================================================== */
+        let firecrackers = [];
+        let sparks = [];
+
+        class Firecracker {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = 3;
+                this.color = this.getRandomColor();
+                this.exploded = false;
+                this.timer = 0;
+                
+                // Randomly select one of the 12 sound profiles
+                this.soundProfile = Math.floor(Math.random() * 10); 
+            }
+
+            getRandomColor() {
+                const colors = [
+                    '#FFD700', // Gold
+                    '#FF4500', // Orange Red
+                    '#FF1493', // Deep Pink
+                    '#00FFFF', // Cyan
+                    '#FF69B4', // Hot Pink
+                    '#FFFFFF', // White
+                    '#FF0000', // Red
+                    '#00FF00', // Green
+                    '#9370DB', // Medium Purple
+                    '#FFA500'  // Orange
+                ];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.timer++;
+                if (this.timer > 15 && !this.exploded) {
+                    this.explode();
+                }
+            }
+
+            explode() {
+                this.exploded = true;
+                
+                // Trigger specific sound based on profile
+                switch(this.soundProfile) {
+                    case 0: playBoomSound(); break;
+                    case 1: playWhistleSound(); break;
+                    case 2: playCrackleSound(); break;
+                    case 3: playMultiCrackleSound(); break;
+                    case 4: playSizzleSound(); break;
+                    case 5: playFlowerPotSound(); break;
+                    case 6: playChakriSound(); break;
+                    case 7: playLaunchSound(); break;
+                    case 8: playEchoPopSound(); break;
+                    case 9: playFinaleSound(); break;
+                    default: playPopSound();
+                }
+                
+                const numSparks = 60 + Math.random() * 60;
+                for (let i = 0; i < numSparks; i++) {
+                    const angle = (Math.PI * 2) / numSparks * i;
+                    const speed = Math.random() * 10 + 2;
+                    sparks.push(new Spark(this.x, this.y, angle, speed, this.color));
+                }
+            }
+
+            draw(ctx) {
+                if (!this.exploded) {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = '#FFF';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#FFF';
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+        }
+
+        class Spark {
+            constructor(x, y, angle, speed, color) {
+                this.x = x;
+                this.y = y;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.friction = 0.96; // Air resistance
+                this.gravity = 0.12;  // Gravity pulling down
+                this.alpha = 1;
+                this.decay = Math.random() * 0.02 + 0.01;
+                this.color = color;
+                this.history = [];
+                this.maxHistory = 6;
+                this.size = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.vx *= this.friction;
+                this.vy *= this.friction;
+                this.vy += this.gravity;
+                
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                this.alpha -= this.decay;
+                
+                // Trail effect
+                this.history.push({ x: this.x, y: this.y });
+                if (this.history.length > this.maxHistory) {
+                    this.history.shift();
+                }
+            }
+
+            draw(ctx) {
+                if (this.alpha <= 0) return;
+
+                // Draw trail
+                ctx.beginPath();
+                for (let i = 0; i < this.history.length - 1; i++) {
+                    const pt1 = this.history[i];
+                    const pt2 = this.history[i+1];
+                    ctx.beginPath();
+                    ctx.moveTo(pt1.x, pt1.y);
+                    ctx.lineTo(pt2.x, pt2.y);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${this.alpha * (i/this.history.length)})`;
+                    ctx.lineWidth = this.size;
+                    ctx.stroke();
+                }
+
+                // Draw main spark head
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${this.hexToRgb(this.color)}, ${this.alpha})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            hexToRgb(hex) {
+                const bigint = parseInt(hex.slice(1), 16);
+                const r = (bigint >> 16) & 255;
+                const g = (bigint >> 8) & 255;
+                const b = bigint & 255;
+                return `${r}, ${g}, ${b}`;
+            }
+        }
+
+        function initFirecrackerEngine() {
+            function animateCrackers() {
+                // Clear canvas with trailing effect for a glowing smear
+                crackerCtx.fillStyle = 'rgba(5, 2, 5, 0.2)';
+                crackerCtx.fillRect(0, 0, width, height);
+
+                // Update and draw firecracker launchers
+                for (let i = firecrackers.length - 1; i >= 0; i--) {
+                    const fc = firecrackers[i];
+                    fc.update();
+                    fc.draw(crackerCtx);
+                    if (fc.exploded) {
+                        firecrackers.splice(i, 1);
+                    }
+                }
+
+                // Update and draw sparks
+                for (let i = sparks.length - 1; i >= 0; i--) {
+                    const spark = sparks[i];
+                    spark.update();
+                    spark.draw(crackerCtx);
+                    if (spark.alpha <= 0) {
+                        sparks.splice(i, 1);
+                    }
+                }
+
+                requestAnimationFrame(animateCrackers);
+            }
+            animateCrackers();
+
+            // Click Listener
+            diwaliStage.addEventListener('mousedown', (e) => {
+                // Spawn 3-5 firecrackers per click
+                const count = Math.floor(Math.random() * 3) + 3;
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        firecrackers.push(new Firecracker(e.clientX, e.clientY));
+                    }, i * 100);
+                }
+            });
+
+            // Touch support
+            diwaliStage.addEventListener('touchstart', (e) => {
+                const touch = e.touches[0];
+                const count = Math.floor(Math.random() * 3) + 3;
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        firecrackers.push(new Firecracker(touch.clientX, touch.clientY));
+                    }, i * 100);
+                }
+            }, { passive: true });
+        }
+
+    </script>
+</body>
+</html>
